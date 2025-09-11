@@ -5,8 +5,8 @@ from flask_marshmallow import Marshmallow
 app = Flask(__name__)
 
 #creamos las credenciales para conectarnos a la bd
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/web'
-app.config['SQLALCHEMY_TRACK_MODIFACATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/mysql'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.secret_key = "web"
 
