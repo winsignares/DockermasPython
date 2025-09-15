@@ -9,5 +9,10 @@ def index():
 def main():
     return render_template("views/dashboard.html")
 
+@app.route("/tablas")
+def tablas():
+    return render_template("views/tables.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000, host='0.0.0.0')
