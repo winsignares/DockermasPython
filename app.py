@@ -1,5 +1,6 @@
-from flask import Flask, request, jsonify, redirect, render_template
+from flask import Flask, request, jsonify, redirect, session, render_template, abort
 from Config.db import app
+import secrets 
 
 @app.route("/")
 def index():
@@ -37,8 +38,35 @@ def cargarTabla():
 
 @app.route("/login")
 def login():
-    return render_template("views/login.html")
+    token = generete_csrf_token()
+    return render_template("views/login.html", csrf_token = token)
 
+
+def generete_csrf_token():
+    if 'csrf_token' not in session:
+        session['csrf_token'] = secrets.token_urlsafe(32)
+    return session['csrf_token']
+
+def validar_csrf(token_from_request):
+    token_session = session.get('csrf_token')
+    return token_session and secrets.compare_digest(token_session, token_from_request or "")
+
+@app.route("/submit", methods=['POST'])
+def submit():
+    token = request.headers.get('X-CSRF-Token') or request.form.get('csrf_token')
+    if not validar_csrf(token):
+        abort(403, description="CSRF Token Invalido")
+    data = request.form.to_dict()
+    if data['exampleInputEmail'] == "aaa@aaa.com" and data['exampleInputPassword'] == "123":
+        return jsonify({
+            "status": 200,
+            "url":"/tablas"
+        })   
+    else:
+        return jsonify({
+            "status": 200,
+            "received":data
+        }) 
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000, host='0.0.0.0')
