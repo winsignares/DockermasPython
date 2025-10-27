@@ -2,6 +2,12 @@ from flask import Flask, request, jsonify, redirect, session, render_template, a
 from Config.db import app
 import secrets 
 
+from Config.Controller.UserController import routes_UserC
+
+app.register_blueprint(routes_UserC, url_prefix="/controller")
+
+
+
 @app.route("/")
 def index():
     return "Hola Mundo Web"
@@ -67,6 +73,9 @@ def submit():
             "status": 200,
             "received":data
         }) 
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000, host='0.0.0.0')

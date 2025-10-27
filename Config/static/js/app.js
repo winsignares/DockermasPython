@@ -54,3 +54,24 @@ function cargartabla() {
       // always executed
     });
 }
+
+
+function saveUser(){
+  data = {
+    "nombre": "William",
+    "apellidos":"Insignares"
+  }
+  axios.post('/controller/saveUser',data)
+  .then(res=>{
+    //alert(res);
+    console.log('respuesta: ', res);
+    alert("Datos Enviado correctamente "+ JSON.stringify(res.data) );
+   
+    
+  })
+  .catch(err=>{
+    console.log('respuesta: ', err.response ? err.response.data : err.message);
+    alert("Error");
+  });
+
+}
