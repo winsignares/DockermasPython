@@ -22,4 +22,6 @@ COPY . .
 EXPOSE 5000
 
 # Comando por defecto para iniciar la aplicación
-CMD ["python", "app.py"]
+
+COPY wait-for-it.sh /wait-for-it.sh
+CMD ["./wait-for-it.sh", "db:3306", "--", "python", "app.py"]
