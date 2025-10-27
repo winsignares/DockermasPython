@@ -13,9 +13,7 @@ class Personas(db.Model):
 class PersonaSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Personas
-        load_instance = True  # permite crear objetos Personas desde JSON
-
-
+        load_instance = True  
 
 with app.app_context():
     db.create_all()
